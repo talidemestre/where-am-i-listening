@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+
+      function initialize() {
+
+		points = $.csv.toArrays(data)
+		console.log(points)
+	  
+        var earth = new WE.map('earth_div');
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+
+		var marker_array = [];
+
+        marker_array[0] = WE.marker([51.5, -0.09]).addTo(earth);
+        marker_array[0].bindPopup("<b>Hello world!</b><br>I am a popup.<br /><span style='font-size:10px;color:#999'>Tip: Another popup is hidden in Cairo..</span>", {maxWidth: 150, closeButton: true}).openPopup();
+
+        marker_array[1] = WE.marker([70.058056, 31.228889]).addTo(earth);
+        marker_array[1].bindPopup("<b>Cairo</b><br>Yay, you found me!", {maxWidth: 120, closeButton: false});
+
+        var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
+
+        earth.setView([71.505, 0], 6);
+      }
+	 
+	 function parseData(url, callBack) {
+			Papa.parse(url, {
+				download: true,
+				dynamicTyping: true,
+				complete: function(results) {
+					callBack(results.data);
+				}
+			});
+		}
+	  parseData("tests/sample.csv", assignData);
+
+    </script>
+    <style>
+      html, body{padding: 0; margin: 0; background-color: black;}
+      #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
+    </style>
+    <title>WebGL Earth API: Markers</title>
+  </head>
+  <body onload="initialize()">
+    <div id="earth_div"></div>
+  </body>
+</html>

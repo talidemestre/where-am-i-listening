@@ -5,13 +5,17 @@ from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
 
-@app.route('/json')
+@app.route('/json', methods=["GET", "POST"])
 def get():
-        sample_artists = ["paul simon", "kingo hamada", "midnight oil", "jack stauber", "gianni and kyle", "gasper nali", "rostam", "bo en", "cub sport"]
-        df = createDataframe(sample_artists)
+        print(request)
+        print(request.json)
+        print("DEADBEEF")
+
+        artist_list = request.json
+        df = createDataframe(artist_list)
         return df.to_json(orient="records")
         
-@app.route('/')
+@app.route('/', methods=["GET"])
 def index():
         return render_template("index.html")
         

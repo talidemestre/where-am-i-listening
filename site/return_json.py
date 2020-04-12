@@ -7,49 +7,12 @@ import geocoder
 import random
 import wptools
 import requests
-from flask import Flask
-from flask_restful import Resource, Api
-
-app = Flask(__name__)
-api = Api(app)
-
-class JsonController(Resource):
-    schema = {
-        'GET': {
-            'type': 'array',
-            'properties': {
-                'id':   {
-                    'type': 'string'
-                }
-            }
-        }
-    }
-
-    def get(self):
-        sample_artists = ["paul simon", "kingo hamada", "midnight oil", "jack stauber", "gianni and kyle", "gasper nali", "rostam", "bo en", "cub sport"]
-        df = createDataframe(sample_artists)
-        return df.to_json(orient="records")
-        
-        
-        
-api.add_resource(JsonController, '/')
-
-if __name__ == "__main__":
-    app.run()
-    
-    
-    
-
-
 import os
-os.environ["PROJ_LIB"] = "C:\\Users\\Tali\\Anaconda3\\Library\\share";
 from matplotlib import pyplot as plt
-from mpl_toolkits.basemap import Basemap
-
-
 import warnings
 import matplotlib.cbook
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
+
 
 ## Scraping
 def getArtistOrigin(name: str):
@@ -222,3 +185,7 @@ def getLocationByGeo(name):
         name = name
     g = geocoder.osm(name)
     return g.latlng
+
+    
+    
+

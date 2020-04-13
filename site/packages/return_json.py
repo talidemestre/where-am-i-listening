@@ -101,19 +101,23 @@ def getOriginFromWikipedia(name: str):
     bs = BeautifulSoup(artistPage)
     
     tables = bs.find_all("table")
-    
     tab = None
     for tab in tables:
         if "infobox" in tab["class"]:
             break
             
     if tab != None:
-        # search for 'origin' to return
-        titles = [heading.text.strip() for heading in tab.find_all("th")]
-        titles.pop(0)
-        data = [data.text.strip() for data in tab.find_all("td")]
+        node_list = [node for node in tab.find_all('tr')]
+        zipped_key_value = []
+        for node in node_list:
+            try:
+                entry = (node.find_all('th')[0].text.strip(), node.find_all('td')[0].text.strip())
+                zipped_key_value.append(entry)
+            except:
+                None
 
-        for key, value in zip(titles, data):
+        # search for 'origin' to return
+        for key, value in zipped_key_value:
             if key =="Origin":
                 toReturn = Optional.of(value)
                 
@@ -125,13 +129,12 @@ def getOriginFromWikipedia(name: str):
         
         # worse case, birthplace not tagged
         if toReturn == Optional.empty():
-            for key, value in zip(titles, data):
-                if key =="Born":
+            for key, value in zipped_key_value:
+                if key == "Born":
                     try:
                         index = value.index("age")
                         value = value[index+7:]
                         toReturn = Optional.of(value)
-
                     except:
                         index = 0
                 if key =="Died":

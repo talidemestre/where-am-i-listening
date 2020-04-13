@@ -65,11 +65,9 @@ def getOriginFromMusicbrainz(name: str):
                 found_category += 1
         if key == "Area":
             location += value
-            if value != "":
-                found_category += 1
         if key == "Begin Area":
-            location = value + ", " + location
-            
+            if value != "":
+                location = value + ", " + location
         if key == "Sort Name":
             sort_name = value
     

@@ -46,7 +46,7 @@ def getOriginFromMusicbrainz(name: str):
     page = requests.get(url)
 
     print(page)
-    bs = BeautifulSoup(page.content)
+    bs = BeautifulSoup(page.content, features="lxml")
     
     table = bs.find_all("table")
     
@@ -98,7 +98,7 @@ def getOriginFromWikipedia(name: str):
     toReturn = Optional.empty()
     artistPage = wiki.page(wiki.search(name)[0], auto_suggest=False).html()
     
-    bs = BeautifulSoup(artistPage)
+    bs = BeautifulSoup(artistPage, features="lxml")
     
     tables = bs.find_all("table")
     tab = None

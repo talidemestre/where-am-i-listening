@@ -61,9 +61,15 @@ def getOriginFromMusicbrainz(name: str):
     found_category = 0
     for key, value in zip (titles, artist_data):
         if (key == "Area" or key == "Begin Area"):
-            location += " " + value
             if value != "":
                 found_category += 1
+        if key == "Area":
+            location += value
+            if value != "":
+                found_category += 1
+        if key == "Begin Area":
+            location = value + ", " + location
+            
         if key == "Sort Name":
             sort_name = value
     
@@ -184,7 +190,18 @@ def getLocationByGeo(name):
     except:
         name = name
     g = geocoder.osm(name)
-    return g.latlng
+    latlng = g.latlng
+    print(latlng)
+    # if lat long not found, try smaller and smaller search terms
+    if latlng == None:
+        try:
+            index = name.rfind(", ")
+            newName = name[0:index]
+            print(newName)
+            latlng =  getLocationByGeo(newName)
+        except:
+            None
+    return latlng
 
     
     

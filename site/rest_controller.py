@@ -7,10 +7,6 @@ app = Flask(__name__)
 
 @app.route('/json', methods=["GET", "POST"])
 def get():
-        print(request)
-        print(request.json)
-        print("DEADBEEF")
-
         artist_list = request.json
         df = createDataframe(artist_list)
         return df.to_json(orient="records")

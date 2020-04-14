@@ -15,6 +15,11 @@ def get():
 def index():
         return render_template("index.html")
         
+@app.route('/spotify', methods=["GET"])
+def spotify():
+        return render_template("spotify.html")
+        
+
 
 if __name__ == '__main__':
     app.debug = True

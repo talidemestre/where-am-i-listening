@@ -96,7 +96,15 @@ def getOriginFromMusicbrainz(name: str):
 
 def getOriginFromWikipedia(name: str):
     toReturn = Optional.empty()
-    artistPage = wiki.page(wiki.search(name)[0], auto_suggest=False).html()
+    
+    searches = wiki.search(name)
+    while len(searches) == 0:
+        if len(name):
+            return Optional.empty()
+        name = name.join(content.split(' ')[:-1])
+        searches = wiki.search(name)
+        
+    artistPage = wiki.page(searches[0], auto_suggest=False).html()
     
     bs = BeautifulSoup(artistPage, features="lxml")
     

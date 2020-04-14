@@ -1,8 +1,7 @@
 // default to example data for testing
-var sample_artists = ["Bo Burnham", "Trevor Moore", "Neutral Milk Hotel", "Fruit Bats", "Johnny Flynn"]
-
+var sample_artists;
 // default when offline
-var jsonString = '[{"artist_name":"paul simon","location_name":" United States Newark","location_coord":[40.735657,-74.1723667]},{"artist_name":"kingo hamada","location_name":" Japan Shinjuku","location_coord":[35.6937632,139.7036319]},{"artist_name":"midnight oil","location_name":" Australia Sydney","location_coord":[-33.8548157,151.2164539]},{"artist_name":"jack stauber","location_name":" Pittsburgh ","location_coord":[40.4416941,-79.9900861]},{"artist_name":"gianni and kyle","location_name":"Not Found","location_coord":[13.2433974,121.9863044]},{"artist_name":"gasper nali","location_name":" Malawi ","location_coord":[-13.2687204,33.9301963]},{"artist_name":"rostam","location_name":" United States Washington, D.C.","location_coord":[36.29885175,-82.3591933141]},{"artist_name":"bo en","location_name":" United Kingdom ","location_coord":[54.7023545,-3.2765753]},{"artist_name":"cub sport","location_name":" Brisbane Brisbane","location_coord":[-27.4689682,153.0234991]}]';
+var jsonString;
 
 function initialize() {
   var jsonData = JSON.parse(jsonString)
@@ -33,11 +32,11 @@ function initialize() {
 }
 
 
- function makeRequest() {
+ function makeRequest(list_of_artists) {
   const Http = new XMLHttpRequest();
   const url='/json';
 
-  artist_json = JSON.stringify(sample_artists);
+  artist_json = JSON.stringify(list_of_artists);
   Http.open("POST", url);
   Http.setRequestHeader("Content-Type", "application/json");
   Http.send(artist_json);
@@ -54,3 +53,40 @@ function initialize() {
   }
 
  }
+
+
+function getTopArtists(){
+  var parsedHash = new URLSearchParams(
+    window.location.hash.substr(1) // skip the first char (#)
+  );
+  var spot_token = parsedHash.get('access_token');
+
+  const spotHttp = new XMLHttpRequest();
+  const spotUrl = "https://api.spotify.com/v1/me/top/artists?limit=50"
+  const spotCode = 'Bearer ' + spot_token;
+  console.log(spotCode)
+
+  spotHttp.open("GET", spotUrl);
+  spotHttp.setRequestHeader("Authorization", spotCode);
+  console.log("Sending request")
+  spotHttp.send()
+  
+  var initialized = 0;
+  spotHttp.onreadystatechange = (e) => {
+    console.log(spotHttp.response)
+    if (spotHttp.response != undefined && initialized==0) {
+      var jsonData = JSON.parse(spotHttp.response)["items"]
+      console.log(jsonData)
+      var artistList = []
+      for (i = 0; i < jsonData.length; i++) {
+        console.log(jsonData[i]['name'])
+        artistList.push(jsonData[i]['name'])
+      }
+      initialized++;
+      console.log(artistList)
+      makeRequest(artistList);
+    }    
+
+  }
+}
+

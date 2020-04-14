@@ -19,7 +19,7 @@ def getArtistOrigin(name: str):
     result = getOriginFromMusicbrainz(name)
     
     if result.is_empty():
-        result = getOriginFromWikipedia(name + "Musician")
+        result = getOriginFromWikipedia(name + " Musician")
     
     if result.is_empty():
         result = getOriginFromWikidata(name)
@@ -99,9 +99,10 @@ def getOriginFromWikipedia(name: str):
     
     searches = wiki.search(name)
     while len(searches) == 0:
-        if len(name):
+        if len(name) <= 2:
             return Optional.empty()
-        name = name.join(content.split(' ')[:-1])
+        name = ' '.join(name.split(' ')[:-1])
+        print(name)
         searches = wiki.search(name)
         
     artistPage = wiki.page(searches[0], auto_suggest=False).html()
@@ -206,6 +207,8 @@ def getLocationByGeo(name):
         try:
             index = name.rfind(", ")
             newName = name[0:index]
+            if len(newName) <=2:
+                return [0,0]
             print(newName)
             latlng =  getLocationByGeo(newName)
         except:

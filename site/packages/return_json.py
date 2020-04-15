@@ -83,7 +83,8 @@ def getOriginFromMusicbrainz(name: str):
     # if we didnt find precise city, search wikipedia with location name
     if found_category < 2:
         try:
-            wiki_location = getOriginFromWikipedia(name + " " +location)
+            wiki_location = getOriginFromWikipedia(name + " " +location + " Musician")
+            print(wiki_location)
         except:
             None
     if wiki_location.is_present():

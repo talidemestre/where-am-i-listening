@@ -25,3 +25,5 @@ test.py
 
 .ipynb_checkpoints
 *.iml
+
+.links.txt.swp

@@ -18,7 +18,12 @@ function initialize() {
     console.log(i)
     html_popup_raw = "<b>" + artistData["artist_name"] +"</b><br>" + artistData["location_name"] + "<br>"
     if (artistData["location_coord"] != null || artistData["location_name" == "Not found"]){
-      marker_array[i] = WE.marker(artistData  ['location_coord']).addTo(earth);
+      //slightly randomise location to separate artists on same coordinate
+      var baseCoords = artistData['location_coord']
+      var changedCoords = [baseCoords[0] + Math.random()/25, baseCoords[1] + Math.random()/25]
+
+
+      marker_array[i] = WE.marker(changedCoords).addTo(earth);
       marker_array[i].bindPopup(html_popup_raw, {maxWidth: 150, closeButton: true}).openPopup();
     } else {
       marker_array[i] = null
@@ -62,7 +67,7 @@ function getTopArtists(){
   var spot_token = parsedHash.get('access_token');
 
   const spotHttp = new XMLHttpRequest();
-  const spotUrl = "https://api.spotify.com/v1/me/top/artists?limit=50"
+  const spotUrl = "https://api.spotify.com/v1/me/top/artists?limit=5"
   const spotCode = 'Bearer ' + spot_token;
   console.log(spotCode)
 

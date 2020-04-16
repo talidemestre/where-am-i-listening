@@ -99,12 +99,21 @@ def getOriginFromMusicbrainz(name: str):
     # attempt to verify this is the right artist using sort name, if not stop the function
     name_list = name.lower().split()
     sort_name = sort_name.lower()
-    try:
-        for word in name_list:
-            index = sort_name.index(word)
-    except:
+    dont_match_score = 0
+    for word in name_list:
+        try:
+            try:
+                index = sort_name.index(word)
+            except:
+                # removes a potential 's from the end of the name
+                index = sort_name.index(word[0:len(word)-2])
+        except:
+            dont_match_score += 1
+    dont_match_index = dont_match_score / len(name_list)
+    print(dont_match_index)
+    if dont_match_index > 0.4:
         return toReturn
-    
+
     # if we didnt find precise city, search wikipedia with location name
     if found_category < 2:
         try:
@@ -192,7 +201,7 @@ def getOriginFromWikidata(name: str):
     try:
         page.get_wikidata()
     except:
-        print("Couldn't get wikidata from name.")
+        print("Couldn't get wikidata frmatchom name.")
         
     try:
         placeOfBirth = page.data['wikidata']['place of birth (P19)']

@@ -67,7 +67,7 @@ function getTopArtists(){
   var spot_token = parsedHash.get('access_token');
 
   const spotHttp = new XMLHttpRequest();
-  const spotUrl = "https://api.spotify.com/v1/me/top/artists?limit=5"
+  const spotUrl = "https://api.spotify.com/v1/me/top/artists?limit=10"
   const spotCode = 'Bearer ' + spot_token;
   console.log(spotCode)
 

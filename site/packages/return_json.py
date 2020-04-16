@@ -11,13 +11,41 @@ import os
 from matplotlib import pyplot as plt
 import warnings
 import matplotlib.cbook
+import redis
+import json
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
+
+def getArtistOrigin(name: str):
+    redis_conn = redis.Redis(host='localhost', port=6379, db=0)
+    coord_key = name + " Coordinate"
+
+    try:
+        origin = redis_conn.get(name).decode('utf-8')
+        coord_list = json.loads(redis_conn.get(coord_key).decode('utf-8'))
+        print("Retrieved", name, "from Redis!")
+    except:
+        print("Scraping for", name)
+        originOptional = getArtistOriginFromScraping(name)
+        if originOptional.is_present(): 
+            origin = originOptional.get()
+
+            coord_list = getLocationByGeo(origin)
+            coord_string = json.dumps(coord_list)
+
+            redis_conn.set(name, origin)
+            redis_conn.set(coord_key, coord_string)
+        else:
+            origin = "Not Found"
+            coord_list = [0, 0]
+    return (origin, coord_list)
+
 
 
 ## Scraping
-def getArtistOrigin(name: str):
+def getArtistOriginFromScraping(name: str):
     result = getOriginFromMusicbrainz(name)
-    
+    toReturn = Optional.empty()
+
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Musician")
     
@@ -25,10 +53,7 @@ def getArtistOrigin(name: str):
         result = getOriginFromWikidata(name)
     
     if result.is_present():
-        toReturn = result.get()
-    else:
-        print("Still not found!", name)
-        toReturn = "Not Found"
+        toReturn = result
         
     return toReturn
 
@@ -191,9 +216,9 @@ def getOriginFromWikidata(name: str):
     return toReturn
 
 def createDataframe(artist_list):
-    location_name = [getArtistOrigin(artist) for artist in artist_list]
-    location_coord = [getLocationByGeo(loc) for loc in location_name]
-    df = pd.DataFrame({"artist_name" : artist_list, "location_name" : location_name, "location_coord": location_coord })
+    location = [getArtistOrigin(artist) for artist in artist_list]
+    unzipped_location = list(zip(*location))
+    df = pd.DataFrame({"artist_name" : artist_list, "location_name" : unzipped_location[0], "location_coord": unzipped_location[1] })
     return df
                      
 def getLocationByGeo(name):

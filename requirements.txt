@@ -1,4 +1,5 @@
 pandas
+gunicorn
 flask
 wikipedia
 geocoder
@@ -9,4 +10,3 @@ wptools
 requests
 matplotlib
 redis
-gunicorn

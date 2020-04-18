@@ -21,6 +21,8 @@ def getArtistOrigin(name: str):
         redis_conn = redis.from_url(os.environ.get("REDIS_URL"))
     except:
         redis_conn = redis.Redis()
+    
+    redis_conn.flushall()
 
     coord_key = name + " Coordinate"
 

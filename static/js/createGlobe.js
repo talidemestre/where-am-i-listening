@@ -44,10 +44,14 @@ function initialize() {
 
   artist_json = JSON.stringify(list_of_artists);
   var initialized = 0
-  fetch(url, {method : 'POST', headers : {"Content-Type": "application/json"}, body: artist_json}, 6)
-        .then(function(result) {
-          jsonString = result.responseText;
-          initialize();
+  fetch(url, {method : 'POST', headers : {"Content-Type": "application/json"}, body: artist_json})
+        .then((response) => {
+          response.text().then((text) => {
+            console.log(text)
+            jsonString = text;
+            initialize();
+          })
+
         }).catch(function(error) {
           console.log("Fetch failed, retrying.")
           setTimeout(makeRequest.bind(this, list_of_artists),1000);

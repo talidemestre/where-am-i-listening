@@ -1,5 +1,5 @@
 pandas
-gunicorn==20.0.4
+gunicorn==19.1.1
 flask
 wikipedia
 geocoder

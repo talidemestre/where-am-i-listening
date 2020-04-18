@@ -49,13 +49,15 @@ function initialize() {
   var initialized = 0
 
   Http.onreadystatechange = (e) => {
+    console.log("HTTP request to /json")
     console.log(Http.responseText)
-    console.log(spotHttp.status)
+    console.log(Http.status)
     if (Http.responseText.length > 0 && initialized == 0 && Http.status == 200){
       initialized++
       jsonString = Http.responseText
       initialize()
     } else {
+      console.log("Making request again")
       Http.send()
     }
   }

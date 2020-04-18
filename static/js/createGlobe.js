@@ -49,10 +49,14 @@ function initialize() {
   var initialized = 0
 
   Http.onreadystatechange = (e) => {
-    if (Http.responseText.length > 0 && initialized == 0){
+    console.log(Http.responseText)
+    console.log(spotHttp.status)
+    if (Http.responseText.length > 0 && initialized == 0 && Http.status == 200){
       initialized++
       jsonString = Http.responseText
       initialize()
+    } else {
+      Http.send()
     }
   }
 
@@ -88,10 +92,7 @@ function getTopArtists(){
       initialized++;
       console.log(artistList)
       makeRequest(artistList);
-    } else {
-      console.log("Resending request!")
-      spotHttp.send()
-    }    
+    }
 
   }
 }

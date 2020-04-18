@@ -16,7 +16,7 @@ import json
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 def getArtistOrigin(name: str):
-    redis_conn = redis.Redis(host='localhost', port=6379, db=0)
+    redis_conn = redis.from_url(os.environ.get("REDIS_URL"))
     coord_key = name + " Coordinate"
 
     try:

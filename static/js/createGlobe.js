@@ -40,7 +40,7 @@ function initialize() {
 
  function makeRequest(list_of_artists) {
   const Http = new XMLHttpRequest();
-  const url='/json';
+  const url='https://whereamilistening.herokuapp.com/json';
 
   artist_json = JSON.stringify(list_of_artists);
   Http.open("POST", url);

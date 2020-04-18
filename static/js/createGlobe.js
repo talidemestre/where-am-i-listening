@@ -86,6 +86,9 @@ function getTopArtists(){
       initialized++;
       console.log(artistList)
       makeRequest(artistList);
+    } else {
+      console.log("Resending request!")
+      spotHttp.send()
     }    
 
   }

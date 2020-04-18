@@ -9,4 +9,4 @@ wptools
 requests
 matplotlib
 redis
-
+gunicorn

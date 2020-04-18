@@ -1,1 +1,1 @@
-web: gunicorn rest_controller:app
+web: gunicorn site.app:app

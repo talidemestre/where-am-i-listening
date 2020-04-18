@@ -58,8 +58,8 @@ function initialize() {
       initialize()
     } else {
       console.log("Making request again")
-      Http.send()
-    }
+      makeRequest();
+        }
   }
 
  }

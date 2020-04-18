@@ -2,7 +2,7 @@ pandas
 flask
 wikipedia
 geocoder
-BeautifulSoup
+beautifulsoup4
 Optional
 numpy
 wptools

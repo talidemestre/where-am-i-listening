@@ -1,3 +1,4 @@
+gunicorn
 pandas
 flask
 wikipedia
@@ -9,4 +10,3 @@ wptools
 requests
 matplotlib
 redis
-gunicorn

@@ -1,1 +1,13 @@
 
+pandas
+flask
+wikipedia
+geocoder
+gunicorn
+beautifulsoup4
+Optional.py
+numpy
+wptools
+requests
+matplotlib
+redis

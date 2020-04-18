@@ -14,10 +14,12 @@ function initialize() {
 
     for (let i = 0; i < jsonData.length; i++) {
     artistData = jsonData[i];
-    console.log(artistData)
-    console.log(i)
+    coords = artistData['location_coord']
+    locationIsZero = coords[0] === 0 && coords[1] === 0
+    console.log(coords)
+    console.log(locationIsZero)
     html_popup_raw = "<b>" + artistData["artist_name"] +"</b><br>" + artistData["location_name"] + "<br>"
-    if (artistData["location_coord"] != null || artistData["location_name" == "Not found"]){
+    if (locationIsZero != true && (artistData["location_coord"] != null  || artistData["location_name"] == "Not found")){
       //slightly randomise location to separate artists on same coordinate
       var baseCoords = artistData['location_coord']
       var changedCoords = [baseCoords[0] + Math.random()/25, baseCoords[1] + Math.random()/25]
@@ -29,7 +31,6 @@ function initialize() {
       marker_array[i] = null
     }
   }
-  console.log(marker_array)
 
   var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
 
@@ -48,8 +49,6 @@ function initialize() {
   var initialized = 0
 
   Http.onreadystatechange = (e) => {
-    console.log(Http.responseText)
-    console.log(initialized)
     if (Http.responseText.length > 0 && initialized == 0){
       initialized++
       jsonString = Http.responseText
@@ -78,13 +77,10 @@ function getTopArtists(){
   
   var initialized = 0;
   spotHttp.onreadystatechange = (e) => {
-    console.log(spotHttp.response)
     if (spotHttp.response != undefined && initialized==0) {
       var jsonData = JSON.parse(spotHttp.response)["items"]
-      console.log(jsonData)
       var artistList = []
       for (i = 0; i < jsonData.length; i++) {
-        console.log(jsonData[i]['name'])
         artistList.push(jsonData[i]['name'])
       }
       initialized++;

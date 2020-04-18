@@ -110,7 +110,7 @@ def getOriginFromMusicbrainz(name: str):
         except:
             dont_match_score += 1
     dont_match_index = dont_match_score / len(name_list)
-    print(dont_match_index)
+    print("Dissimilarity rating is", dont_match_index)
     if dont_match_index > 0.4:
         return toReturn
 
@@ -201,7 +201,7 @@ def getOriginFromWikidata(name: str):
     try:
         page.get_wikidata()
     except:
-        print("Couldn't get wikidata frmatchom name.")
+        print("Couldn't get wikidata from name.")
         
     try:
         placeOfBirth = page.data['wikidata']['place of birth (P19)']

@@ -16,8 +16,12 @@ import json
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 def getArtistOrigin(name: str):
-    redis_conn = redis.from_url(os.environ.get("REDIS_URL"))
-    redis_conn.flushall()
+    # heroku or local
+    try:
+        redis_conn = redis.from_url(os.environ.get("REDIS_URL"))
+    except:
+        redis_conn = redis.Redis()
+
     coord_key = name + " Coordinate"
 
     try:

@@ -77,7 +77,9 @@ function getTopArtists(){
   
   var initialized = 0;
   spotHttp.onreadystatechange = (e) => {
-    if (spotHttp.response != undefined && initialized==0) {
+    console.log(spotHttp.status)
+    console.log(spotHttp.response)
+    if (spotHttp.response != undefined && initialized==0 && spotHttp.status == 200) {
       var jsonData = JSON.parse(spotHttp.response)["items"]
       var artistList = []
       for (i = 0; i < jsonData.length; i++) {

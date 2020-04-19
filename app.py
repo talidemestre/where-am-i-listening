@@ -15,9 +15,9 @@ def get():
 def index():
         return render_template("index.html")
         
-@app.route('/spotify', methods=["GET"])
+@app.route('/create', methods=["GET"])
 def spotify():
-        return render_template("spotify.html")
+        return render_template("create.html")
         
 
 

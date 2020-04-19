@@ -6,23 +6,21 @@ function initialize(jsonData) {
     var marker_array = [];
     artistList = jsonData
     for (let i = 0; i < jsonData.length; i++) {
-    artistData = jsonData[i];
-    coords = artistData['location_coord']
-    locationIsZero = coords[0] === 0 && coords[1] === 0
-    console.log(coords)
-    console.log(locationIsZero)
-    html_popup_raw = "<b>" + artistData["artist_name"] +"</b><br>" + artistData["location_name"] + "<br>"
-    if (locationIsZero != true && (artistData["location_coord"] != null  || artistData["location_name"] == "Not found")){
-      //slightly randomise location to separate artists on same coordinate
-      var baseCoords = artistData['location_coord']
-      var changedCoords = [baseCoords[0] + Math.random()/25, baseCoords[1] + Math.random()/25]
+      artistData = jsonData[i];
+      coords = artistData['location_coord']
+      locationIsZero = coords[0] === 0 && coords[1] === 0
+      html_popup_raw = "<b>" + artistData["artist_name"] +"</b><br>" + artistData["location_name"] + "<br>"
+      if (locationIsZero != true && (artistData["location_coord"] != null  || artistData["location_name"] == "Not found")){
+        //slightly randomise location to separate artists on same coordinate
+        var baseCoords = artistData['location_coord']
+        var changedCoords = [baseCoords[0] + Math.random()/25, baseCoords[1] + Math.random()/25]
 
 
-      marker_array[i] = WE.marker(changedCoords).addTo(earth);
-      marker_array[i].bindPopup(html_popup_raw, {maxWidth: 150, closeButton: true}).openPopup();
-    } else {
-      marker_array[i] = null
-    }
+        marker_array[i] = WE.marker(changedCoords).addTo(earth);
+        marker_array[i].bindPopup(html_popup_raw, {maxWidth: 150, closeButton: true}).openPopup();
+      } else {
+        marker_array[i] = null
+      }
   }
 
   var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
@@ -45,7 +43,6 @@ function initialize(jsonData) {
         .then((response) => {
           if (response.status < 200 || response.status >= 299){ throw "Request timed out, trying again."}
           response.json().then((json) => {
-            console.log(json)
             initialize(json);
           })
         }).catch(function(error) {
@@ -73,7 +70,6 @@ function getTopArtists(){
   fetch(spotUrl, {method : 'GET', headers : {"Authorization": spotCode}})
   .then((response) => {
     response.json().then((jsonText) => {
-      console.log(jsonText)
       makeRequest(jsonText);
     })
 

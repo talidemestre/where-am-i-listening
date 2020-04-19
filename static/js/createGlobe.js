@@ -43,6 +43,7 @@ function initialize(jsonData) {
   var initialized = 0
   fetch(url, {method : 'POST', headers : {"Content-Type": "application/json"}, body: JSON.stringify(list_of_artist_names)})
         .then((response) => {
+          if (response.status < 200 || response.status >= 299){ throw "Request timed out, trying again."}
           response.json().then((json) => {
             console.log(json)
             initialize(json);

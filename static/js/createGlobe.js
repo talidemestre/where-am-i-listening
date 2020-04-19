@@ -1,17 +1,10 @@
-// default to example data for testing
-var sample_artists;
-// default when offline
-var jsonString;
-
-function initialize() {
-  var jsonData = JSON.parse(jsonString)
-
+function initialize(jsonData) {
   var options = {atmosphere: true, center: [0, 0], zoom: 0};
   var earth = new WE.map('earth_div', options);
 
   WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
     var marker_array = [];
-
+    artistList = jsonData
     for (let i = 0; i < jsonData.length; i++) {
     artistData = jsonData[i];
     coords = artistData['location_coord']
@@ -38,23 +31,27 @@ function initialize() {
 }
 
 
- function makeRequest(list_of_artists) {
-  const Http = new XMLHttpRequest();
+ function makeRequest(spotJSON) {
   const url='/json';
 
-  artist_json = JSON.stringify(list_of_artists);
-  var initialized = 0
-  fetch(url, {method : 'POST', headers : {"Content-Type": "application/json"}, body: artist_json})
-        .then((response) => {
-          response.text().then((text) => {
-            console.log(text)
-            jsonString = text;
-            initialize();
-          })
+  list_of_artist_objects = spotJSON.items;
+  list_of_artist_names =[];
+  for (i = 0; i < list_of_artist_objects.length ; i++) {
+    list_of_artis  console.log(list_of_artist_names)
+    console.log("trying to fetch")
+  t_names.push(list_of_artist_objects[i].name)
+  }
 
+  var initialized = 0
+  fetch(url, {method : 'POST', headers : {"Content-Type": "application/json"}, body: JSON.stringify(list_of_artist_names)})
+        .then((response) => {
+          response.json().then((json) => {
+            console.log(json)
+            initialize(json);
+          })
         }).catch(function(error) {
           console.log("Fetch failed, retrying.")
-          setTimeout(makeRequest.bind(this, list_of_artists),1000);
+          setTimeout(makeRequest.bind(this, spotJSON),1000);
         })
 
  }
@@ -70,25 +67,17 @@ function getTopArtists(){
   const spotUrl = "https://api.spotify.com/v1/me/top/artists?limit=50"
   const spotCode = 'Bearer ' + spot_token;
   console.log(spotCode)
-
-  spotHttp.open("GET", spotUrl);
-  spotHttp.setRequestHeader("Authorization", spotCode);
   console.log("Sending request")
-  spotHttp.send()
   
   var initialized = 0;
-  spotHttp.onreadystatechange = (e) => {
-    if (spotHttp.response != undefined && initialized==0 && spotHttp.status == 200) {
-      var jsonData = JSON.parse(spotHttp.response)["items"]
-      var artistList = []
-      for (i = 0; i < jsonData.length; i++) {
-        artistList.push(jsonData[i]['name'])
-      }
-      initialized++;
-      console.log(artistList)
-      makeRequest(artistList);
-    }
 
-  }
+  fetch(spotUrl, {method : 'GET', headers : {"Authorization": spotCode}})
+  .then((response) => {
+    response.json().then((jsonText) => {
+      console.log(jsonText)
+      makeRequest(jsonText);
+    })
+
+  })
 }
 

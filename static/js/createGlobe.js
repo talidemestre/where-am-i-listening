@@ -2,7 +2,7 @@ function initialize(jsonData) {
   var options = {atmosphere: true, center: [0, 0], zoom: 0};
   var earth = new WE.map('earth_div', options);
 
-  WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+  WE.tileLayer('https://.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
     var marker_array = [];
     artistList = jsonData
     for (let i = 0; i < jsonData.length; i++) {

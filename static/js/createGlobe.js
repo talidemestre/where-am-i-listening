@@ -37,9 +37,7 @@ function initialize(jsonData) {
   list_of_artist_objects = spotJSON.items;
   list_of_artist_names =[];
   for (i = 0; i < list_of_artist_objects.length ; i++) {
-    list_of_artis  console.log(list_of_artist_names)
-    console.log("trying to fetch")
-  t_names.push(list_of_artist_objects[i].name)
+    list_of_artist_names.push(list_of_artist_objects[i].name)
   }
 
   var initialized = 0

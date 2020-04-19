@@ -2,7 +2,7 @@ function initialize(jsonData) {
   var options = {atmosphere: true, center: [0, 0], zoom: 0};
   var earth = new WE.map('earth_div', options);
 
-  WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+  WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
     var marker_array = [];
     artistList = jsonData
     for (let i = 0; i < jsonData.length; i++) {
@@ -62,7 +62,6 @@ function getTopArtists(){
   const spotHttp = new XMLHttpRequest();
   const spotUrl = "https://api.spotify.com/v1/me/top/artists?limit=50"
   const spotCode = 'Bearer ' + spot_token;
-  console.log(spotCode)
   console.log("Sending request")
   
   var initialized = 0;

@@ -25,5 +25,6 @@ function initialize(jsonData) {
 
   var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
 
+  document.getElementById("spinner").outerHTML = ""
   earth.setView([37.0, -95.7], 3);
 }

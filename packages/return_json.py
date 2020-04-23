@@ -53,6 +53,10 @@ def getArtistOriginFromScraping(name: str):
 
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Musician")
+
+
+    if result.is_empty():
+        result = getOriginFromWikipedia(name + " Band")
     
     if result.is_empty():
         result = getOriginFromWikidata(name)
@@ -72,15 +76,19 @@ def getOriginFromMusicbrainz(name: str):
     sort_name = ""
 
     
-    url = "https://musicbrainz.org/search?query="+name+"%2056&type=artist&method=indexed"
+    url = "https://musicbrainz.org/search?query="+name+"&type=artist&method=indexed"
     page = requests.get(url)
 
     print(page)
     bs = BeautifulSoup(page.content, features="lxml")
     
     table = bs.find_all("table")
-    
-    titles = [title.text.strip() for title in table[0].find_all("th")]
+
+    try:
+        titles = [title.text.strip() for title in table[0].find_all("th")]
+    except:
+        return toReturn
+        
     artist_data = []
     for data in table[0].find_all("td"):
         if len(artist_data) < len(titles):

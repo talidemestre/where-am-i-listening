@@ -18,7 +18,11 @@ def index():
 @app.route('/create', methods=["GET"])
 def spotify():
         return render_template("create.html")
-        
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('img/favicon.ico')
 
 
 if __name__ == '__main__':

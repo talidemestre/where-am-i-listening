@@ -14,7 +14,6 @@ import matplotlib.cbook
 import redis
 import json
 import urllib
-import re
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 def getArtistOrigin(name: str):

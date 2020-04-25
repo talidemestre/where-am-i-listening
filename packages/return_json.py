@@ -245,7 +245,6 @@ def createDataframe(artist_list):
     return df
                      
 def getLocationByGeo(name):
-    print("Name: ", name)
     formattedName, latlng = geocode(name)
     print(latlng)
     # if lat long not found, try smaller and smaller search terms
@@ -263,7 +262,6 @@ def getLocationByGeo(name):
 
     
 def geocode(name):
-    print("Name:", name)
     url = 'https://maps.googleapis.com/maps/api/geocode/json'
     params = {'sensor': 'false', 'address': name, "key": "AIzaSyASk8Wo4ie4CZ4ZjpRRSW0Zq_OZJKP4Xfs"}
     r = requests.get(url, params=params)

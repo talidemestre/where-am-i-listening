@@ -48,15 +48,16 @@ def getArtistOrigin(name: str):
 
 ## Scraping
 def getArtistOriginFromScraping(name: str):
-    result = getOriginFromMusicbrainz(name)
     toReturn = Optional.empty()
 
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Musician")
 
-
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Band")
+    
+    if result.is_empty():
+        result = getOriginFromMusicbrainz(name)
     
     if result.is_empty():
         result = getOriginFromWikidata(name)

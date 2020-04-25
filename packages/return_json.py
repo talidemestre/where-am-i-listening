@@ -35,7 +35,9 @@ def getArtistOrigin(name: str):
         if originOptional.is_present(): 
             origin = originOptional.get()
 
-            coord_list = getLocationByGeo(origin)
+            origin, coord_list = getLocationByGeo(origin)
+            print(origin)
+
             coord_string = json.dumps(coord_list)
 
             redis_conn.set(name, origin)
@@ -50,16 +52,16 @@ def getArtistOrigin(name: str):
 ## Scraping
 def getArtistOriginFromScraping(name: str):
     result = Optional.empty()
-
+    
+    if result.is_empty():
+        result = getOriginFromMusicbrainz(name)
+    
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Musician")
 
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Band")
-    
-    if result.is_empty():
-        result = getOriginFromMusicbrainz(name)
-    
+
     if result.is_empty():
         result = getOriginFromWikidata(name)
 
@@ -243,13 +245,7 @@ def createDataframe(artist_list):
     return df
                      
 def getLocationByGeo(name):
-    try: 
-        index = name.index("[")
-        name = name[0:index]
-    except:
-        name = name
-    g = geocoder.osm(name)
-    latlng = g.latlng
+    formattedName, latlng = geocode(name)
     print(latlng)
     # if lat long not found, try smaller and smaller search terms
     if latlng == None:
@@ -259,11 +255,20 @@ def getLocationByGeo(name):
             if len(newName) <=2:
                 return [0,0]
             print(newName)
-            latlng =  getLocationByGeo(newName)
+            formattedName, latlng = getLocationByGeo(newName)
         except:
-            None
-    return latlng
+            formattedName, latlng = name, None
+    return formattedName, latlng
 
     
-    
-
+def geocode(name):
+    url = 'https://maps.googleapis.com/maps/api/geocode/json'
+    params = {'sensor': 'false', 'address': name, "key": "AIzaSyASk8Wo4ie4CZ4ZjpRRSW0Zq_OZJKP4Xfs"}
+    r = requests.get(url, params=params)
+    try:
+        results = r.json()['results']
+        location = results[0]['geometry']['location']
+        name = results[0]["formatted_address"]
+        return (name, (location['lat'], location['lng']))
+    except:
+        return (name, None)

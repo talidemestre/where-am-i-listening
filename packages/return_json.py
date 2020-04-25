@@ -14,6 +14,7 @@ import matplotlib.cbook
 import redis
 import json
 import urllib
+import re
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 def getArtistOrigin(name: str):
@@ -61,6 +62,9 @@ def getArtistOriginFromScraping(name: str):
 
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Band")
+
+    if result.is_empty():
+        result = getOriginFromWikipedia(name)
 
     if result.is_empty():
         result = getOriginFromWikidata(name)

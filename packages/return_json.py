@@ -13,6 +13,7 @@ import warnings
 import matplotlib.cbook
 import redis
 import json
+import urllib
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 def getArtistOrigin(name: str):
@@ -48,23 +49,21 @@ def getArtistOrigin(name: str):
 
 ## Scraping
 def getArtistOriginFromScraping(name: str):
-    result = getOriginFromMusicbrainz(name)
-    toReturn = Optional.empty()
+    result = Optional.empty()
 
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Musician")
-
 
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Band")
     
     if result.is_empty():
-        result = getOriginFromWikidata(name)
+        result = getOriginFromMusicbrainz(name)
     
-    if result.is_present():
-        toReturn = result
-        
-    return toReturn
+    if result.is_empty():
+        result = getOriginFromWikidata(name)
+
+    return result
 
 
 # unfortunately this seems to alwasy return something as MusicBrain will return results even if they dont have the artist
@@ -76,7 +75,7 @@ def getOriginFromMusicbrainz(name: str):
     sort_name = ""
 
     
-    url = "https://musicbrainz.org/search?query="+name+"&type=artist&method=indexed"
+    url = "https://musicbrainz.org/search?query="+urllib.parse.quote_plus(name)+"&type=artist&method=indexed"
     page = requests.get(url)
 
     print(page)

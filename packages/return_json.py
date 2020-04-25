@@ -13,6 +13,7 @@ import warnings
 import matplotlib.cbook
 import redis
 import json
+import urllib
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 def getArtistOrigin(name: str):
@@ -77,7 +78,7 @@ def getOriginFromMusicbrainz(name: str):
     sort_name = ""
 
     
-    url = "https://musicbrainz.org/search?query="+name+"&type=artist&method=indexed"
+    url = "https://musicbrainz.org/search?query="+urllib.parse.quote_plus(name)+"&type=artist&method=indexed"
     page = requests.get(url)
 
     print(page)

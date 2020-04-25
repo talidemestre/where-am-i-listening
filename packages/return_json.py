@@ -49,7 +49,7 @@ def getArtistOrigin(name: str):
 
 ## Scraping
 def getArtistOriginFromScraping(name: str):
-    toReturn = Optional.empty()
+    result = Optional.empty()
 
     if result.is_empty():
         result = getOriginFromWikipedia(name + " Musician")
@@ -62,11 +62,8 @@ def getArtistOriginFromScraping(name: str):
     
     if result.is_empty():
         result = getOriginFromWikidata(name)
-    
-    if result.is_present():
-        toReturn = result
-        
-    return toReturn
+
+    return result
 
 
 # unfortunately this seems to alwasy return something as MusicBrain will return results even if they dont have the artist

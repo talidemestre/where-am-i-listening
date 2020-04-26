@@ -63,6 +63,9 @@ def getArtistOriginFromScraping(name: str):
         result = getOriginFromWikipedia(name + " Band")
 
     if result.is_empty():
+        result = getOriginFromWikipedia(name)
+
+    if result.is_empty():
         result = getOriginFromWikidata(name)
 
     return result
@@ -271,4 +274,7 @@ def geocode(name):
         name = results[0]["formatted_address"]
         return (name, (location['lat'], location['lng']))
     except:
-        return (name, None)
+        # fallback to open street map if we run out of tokens or something
+        g = geocoder.osm(name)
+        latlng = g.latlng
+        return (name, latlng)

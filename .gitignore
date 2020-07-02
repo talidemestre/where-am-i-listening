@@ -27,3 +27,5 @@ test.py
 *.iml
 
 .links.txt.swp
+
+env

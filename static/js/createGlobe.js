@@ -1,4 +1,19 @@
+let recallTimeout;
+
+function stopAnimate() {
+  console.log("CANCELLING")
+  clearTimeout(recallTimeout);
+}
+
+
+
+
 function initialize(jsonData) {
+  document.getElementById("MouseDownDiv").addEventListener("mousedown", function() {
+    stopAnimate()
+  
+  });
+
   var options = {atmosphere: true, center: [0, 0], zoom: 0};
   var earth = new WE.map('earth_div', options);
 
@@ -26,26 +41,10 @@ function initialize(jsonData) {
   var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
 
   document.getElementById("spinner").outerHTML = ""
-  earth.setView([37.0, -95.7], 3);
+  earth.setView([87, 86], 1);
 
-  console.log(jsonData[0])
-  animate(earth, jsonData[0]['location_coord'], 0)
+  //console.log(jsonData[0])
 
-
-}
-
-function animate(earth, finalCoords, i)
-{    
-    earth.setView([0 + finalCoords[0] *( Math.exp(-i/100) + 1), 0+finalCoords[1]*( Math.exp(-i/100) + 1 )], 3 - 10 * Math.exp(-i/30));
-    console.log("animating")
-    console.log(finalCoords)
-
-    setTimeout(function(){ 
-      if(i<1000){
-        animate(earth, finalCoords, i+1)
-      }
-  }, 10);  
-
-
+  earth.panTo(jsonData[0]['location_coord'])
 
 }

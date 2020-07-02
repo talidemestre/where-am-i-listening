@@ -17,6 +17,13 @@
 
 
 
-html, body{padding: 0; margin: 0;  background-color: salmon;}
+html, body{
+    margin: 0;
+    height: 100vh;
+    padding: 0;
+    background-color: salmon;}
+
+.MouseDownDiv {
+    position:fixed; top:0px; left:0px; bottom:0px; right:0px; background: red;}
 
 #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important; z-index: 10;}

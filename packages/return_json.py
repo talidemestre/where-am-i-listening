@@ -71,7 +71,7 @@ def getArtistOriginFromScraping(name: str):
     return result
 
 
-# unfortunately this seems to alwasy return something as MusicBrain will return results even if they dont have the artist
+# unfortunately this seems to always return something as MusicBrain will return results even if they dont have the artist
 # fortunately it does know alot of artists! Also it is much faster so for now I think the tradeoff is worth it,
 def getOriginFromMusicbrainz(name: str):
     toReturn = Optional.empty()
@@ -145,7 +145,7 @@ def getOriginFromMusicbrainz(name: str):
     
     return toReturn
 
-
+# searches for best match on wikipedia
 def getOriginFromWikipedia(name: str):
     toReturn = Optional.empty()
     
@@ -210,6 +210,8 @@ def getOriginFromWikipedia(name: str):
 
     return toReturn
 
+
+# attempts to get details from wikidata, works infrequently
 def getOriginFromWikidata(name: str):
     toReturn = Optional.empty()
     placeOfBirth = None
@@ -241,6 +243,7 @@ def getOriginFromWikidata(name: str):
     
     return toReturn
 
+# geocodes all artist locations and converts to dataframe 
 def createDataframe(artist_list):
     location = [getArtistOrigin(artist) for artist in artist_list]
     unzipped_location = list(zip(*location))
@@ -263,7 +266,7 @@ def getLocationByGeo(name):
             formattedName, latlng = name, None
     return formattedName, latlng
 
-    
+# geocode place name into coordinates
 def geocode(name):
     url = 'https://maps.googleapis.com/maps/api/geocode/json'
     params = {'sensor': 'false', 'address': name, "key": "AIzaSyASk8Wo4ie4CZ4ZjpRRSW0Zq_OZJKP4Xfs"}

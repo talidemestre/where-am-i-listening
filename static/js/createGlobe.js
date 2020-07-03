@@ -9,7 +9,7 @@ function stopAnimate() {
 
 
 function initialize(jsonData) {
-  document.getElementById("MouseDownDiv").addEventListener("mousedown", function() {
+  document.getElementById("body").addEventListener("mousedown", function() {
     stopAnimate()
   
   });
@@ -18,6 +18,8 @@ function initialize(jsonData) {
   var earth = new WE.map('earth_div', options);
 
   WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+  earth.on("click", () => {console.log("cumc")});
+
     var marker_array = [];
     artistList = jsonData
     for (let i = 0; i < jsonData.length; i++) {
@@ -41,10 +43,22 @@ function initialize(jsonData) {
   var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
 
   document.getElementById("spinner").outerHTML = ""
-  earth.setView([87, 86], 1);
+  earth.setView([0, 0], 1);
+
 
   //console.log(jsonData[0])
-
-  earth.panTo(jsonData[0]['location_coord'])
+//  animate(earth, jsonData[0]['location_coord'], 0)
+       // Start a simple rotation animation
+  var before = null;
+  finalCoords = jsonData[0]['location_coord']
+  i = 0
+  requestAnimationFrame(function animate(now) {
+      var c = earth.getPosition();
+      var elapsed = before? now - before: 0;
+      i += 1
+      earth.setCenter([c[0] + finalCoords[0] * (1/100) *( Math.exp(-i/100)), c[1] + finalCoords[1]*((1/100)* Math.exp(-i/100) )]);
+      earth.setZoom(earth.getZoom() + 1/32 * Math.exp(-i/85))
+            requestAnimationFrame(animate);
+  });
 
 }

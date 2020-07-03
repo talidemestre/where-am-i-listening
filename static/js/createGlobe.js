@@ -9,7 +9,7 @@ function stopAnimate() {
 
 
 function initialize(jsonData) {
-  document.getElementById("MouseDownDiv").addEventListener("mousedown", function() {
+  document.getElementById("body").addEventListener("mousedown", function() {
     stopAnimate()
   
   });

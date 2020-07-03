@@ -1,13 +1,3 @@
-let recallTimeout;
-
-function stopAnimate() {
-  console.log("CANCELLING")
-  clearTimeout(recallTimeout);
-}
-
-
-
-
 function initialize(jsonData) {
   document.getElementById("body").addEventListener("mousedown", function() {
     stopAnimate()
@@ -45,9 +35,6 @@ function initialize(jsonData) {
   earth.setView([0, 0], 1);
 
 
-  //console.log(jsonData[0])
-//  animate(earth, jsonData[0]['location_coord'], 0)
-       // Start a simple rotation animation
   var before = null;
   finalCoords = jsonData[0]['location_coord']
   i = 0

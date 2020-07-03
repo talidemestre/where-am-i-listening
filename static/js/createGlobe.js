@@ -18,7 +18,6 @@ function initialize(jsonData) {
   var earth = new WE.map('earth_div', options);
 
   WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
-  earth.on("click", () => {console.log("cumc")});
 
     var marker_array = [];
     artistList = jsonData

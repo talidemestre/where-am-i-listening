@@ -11,6 +11,10 @@
     
 }
 
+.blur{
+
+	text-shadow: 0 0 px #000;
+}
 .we-pp{
     z-index: 5000;
 }

@@ -1,7 +1,6 @@
 document.getElementById("body").onclick = () => {
-  document.getElementById("body").onmousemove = () => {
     document.querySelectorAll(".fade").forEach((item) => {item.style.display = "none"})
-  }
+  
 }
 
 function initialize(jsonData) {

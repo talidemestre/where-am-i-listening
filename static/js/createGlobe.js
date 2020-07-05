@@ -1,5 +1,6 @@
 document.getElementById("body").onclick = () => {
-    document.querySelectorAll(".fade").forEach((item) => {item.style.display = "none"})
+    document.querySelectorAll(".fade").forEach((item) => {item.className += " transition";})
+    document.getElementById("body").onclick = () => {}
   
 }
 

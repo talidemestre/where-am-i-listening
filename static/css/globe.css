@@ -11,13 +11,24 @@
     
 }
 
+.svg{
+    z-index: 100;
+}
+
 .blur{
 
-	text-shadow: 0 0 px #000;
+    text-shadow: 0 0 8px rgba(0, 0, 0, .7);
+        
 }
+
+.blur-svg{
+    filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+
 .we-pp{
     z-index: 5000;
 }
+
 
 
 

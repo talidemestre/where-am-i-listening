@@ -12,7 +12,7 @@
   </head>
 
   <body id="body" onload="getTopArtists()" >
-    <h1 class="title blur fade">Where Am I Listening?</h1>
+    <h1 class="fade title blur">Where Am I Listening?</h1>
     <div class="spinner" id="spinner" style=" top:calc(50% - 42px); left:calc(50% - 42px); position:absolute;">
       <div class="loadingio-spinner-wedges-hwktw23i59d"><div class="ldio-7t6xq7kajks" style="text-align: center;">
         <div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div id="earth_div" class="globe"></div>
-    <img class="fade" onclick="redirect()" src="{{url_for('static', filename='img/mouse-plate.png')}}" style="position: absolute; width: 10%; bottom: 5%; right: 5%;">
+    <img class="fade blur-svg svg" onclick="redirect()" src="{{url_for('static', filename='img/mouse-plate.svg')}}" style="position: absolute; width: 10%; bottom: 5%; right: 5%;">
 
   </body>
   <script src="{{url_for('static', filename='js/createGlobe.js')}}"></script>

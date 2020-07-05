@@ -1,3 +1,13 @@
-.fade{
-    display: none
+.transition {
+    animation: fadeout 1s;
+    opacity: 0;
+
+}
+@keyframes fadeout {
+    from {
+        opacity:1;
+    }
+    to {
+        opacity:0;
+    }
 }

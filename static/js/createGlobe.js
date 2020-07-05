@@ -46,7 +46,6 @@ function initialize(jsonData) {
         earth.setCenter([c[0] + finalCoords[0] * (1/100) *( Math.exp(-i/100)), c[1] + finalCoords[1]*((1/100)* Math.exp(-i/100) )]);
         earth.setZoom(earth.getZoom() + 1/32 * Math.exp(-i/85))
         requestAnimationFrame(animate);        
-        console.log(i);
       }
 
   });

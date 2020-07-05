@@ -1,12 +1,7 @@
-let recallTimeout;
-
-function stopAnimate() {
-  console.log("CANCELLING")
-  clearTimeout(recallTimeout);
+document.getElementById("body").onclick = () => {
+    document.querySelectorAll(".fade").forEach((item) => {item.style.display = "none"})
+  
 }
-
-
-
 
 function initialize(jsonData) {
   document.getElementById("body").addEventListener("mousedown", function() {
@@ -45,9 +40,6 @@ function initialize(jsonData) {
   earth.setView([0, 0], 1);
 
 
-  //console.log(jsonData[0])
-//  animate(earth, jsonData[0]['location_coord'], 0)
-       // Start a simple rotation animation
   var before = null;
   finalCoords = jsonData[0]['location_coord']
   i = 0
@@ -55,9 +47,12 @@ function initialize(jsonData) {
       var c = earth.getPosition();
       var elapsed = before? now - before: 0;
       i += 1
-      earth.setCenter([c[0] + finalCoords[0] * (1/100) *( Math.exp(-i/100)), c[1] + finalCoords[1]*((1/100)* Math.exp(-i/100) )]);
-      earth.setZoom(earth.getZoom() + 1/32 * Math.exp(-i/85))
-            requestAnimationFrame(animate);
+      if (i <= 400){
+        earth.setCenter([c[0] + finalCoords[0] * (1/100) *( Math.exp(-i/100)), c[1] + finalCoords[1]*((1/100)* Math.exp(-i/100) )]);
+        earth.setZoom(earth.getZoom() + 1/32 * Math.exp(-i/85))
+        requestAnimationFrame(animate);        
+      }
+
   });
 
 }

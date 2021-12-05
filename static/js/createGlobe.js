@@ -1,14 +1,12 @@
+continueAnimate = true
 document.getElementById("body").onclick = () => {
     document.querySelectorAll(".fade").forEach((item) => {item.className += " transition";})
-    document.getElementById("body").onclick = () => {}
+    continueAnimate = false
   
 }
 
 function initialize(jsonData) {
-  document.getElementById("body").addEventListener("mousedown", function() {
-    stopAnimate()
-  
-  });
+
 
   var options = {atmosphere: true, center: [0, 0], zoom: 0};
   var earth = new WE.map('earth_div', options);
@@ -48,7 +46,7 @@ function initialize(jsonData) {
       var c = earth.getPosition();
       var elapsed = before? now - before: 0;
       i += 1
-      if (i <= 400){
+      if (i <= 400  && continueAnimate == true){
         earth.setCenter([c[0] + finalCoords[0] * (1/100) *( Math.exp(-i/100)), c[1] + finalCoords[1]*((1/100)* Math.exp(-i/100) )]);
         earth.setZoom(earth.getZoom() + 1/32 * Math.exp(-i/85))
         requestAnimationFrame(animate);        

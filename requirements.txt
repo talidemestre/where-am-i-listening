@@ -21,7 +21,6 @@ numpy==1.19.5
 optional==0.0.1
 optional.py==1.1.0
 pandas==1.1.5
-pkg-resources==0.0.0
 pycurl==7.44.1
 pyparsing==3.0.6
 python-dateutil==2.8.2

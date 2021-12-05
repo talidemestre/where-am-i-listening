@@ -8,13 +8,10 @@ import random
 import wptools
 import requests
 import os
-from matplotlib import pyplot as plt
 import warnings
-import matplotlib.cbook
 import redis
 import json
 import urllib
-warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 def getArtistOrigin(name: str):
     # heroku or local

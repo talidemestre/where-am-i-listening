@@ -29,3 +29,5 @@ test.py
 .links.txt.swp
 
 env
+
+venv
